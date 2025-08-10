@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: nginx-daemonsets
+  namespace: nginx
+spec:  
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      name: nginx-daemonsets-pods
+      labels:
+        app: nginx    
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+
+
+# Defination :- A DaemonSet ensures that a copy of a specific pod runs on every node in the         cluster (or on selected nodes if configured with node selectors or tolerations). This means at least one pod will run on each eligible node, and when new nodes are added, the DaemonSet automatically schedules pods on them as well.
+
+
+# kubectl apply -f daemonset.yaml
+
+# kubectl get pods -n nginx 
