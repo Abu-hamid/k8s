@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nginx-job
+  namespace: nginx
+
+spec:
+  completions: 1
+  parallelism: 2
+  template:
+    metadata:
+      name: demo-job-pod
+      labels:
+        app: batch-task
+    spec:
+      containers:
+      - name: batch-container
+        image: busybox:latest
+        command: ["sh", "-c", "echo Hello_world && sleep 10"]
+      restartPolicy: Never
+
+
+
+# completions → total number of pods that must successfully complete for the job to be marked      Complete.
+# parallelism → maximum number of pods that can run at the same time.
