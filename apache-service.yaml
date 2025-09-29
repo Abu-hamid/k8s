@@ -1,0 +1,21 @@
+kind: service
+apiVersion: v1
+metadata:
+  name: apache-service
+  namespace: apache
+spec:
+  selector:
+    app: apache
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: clusterIP
+
+
+# To expose the service externally, you can change the type to LoadBalancer or NodePort
+  # type: LoadBalancer
+  # type: NodePort
+
+#kubectl port-forward svc/apache-service 8080:80 -n apache --address=0.0.0.0 (if permission denied try with sudo -E)
+# sudo -E/e kubectl port-forward svc/apache-service 8080:80 -n apache --address=0.0.0.0
