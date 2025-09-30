@@ -1,0 +1,17 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: apache-manager-binding
+  namespace: apache
+subjects:
+- kind: ServiceAccount
+  name: apache-user
+  namespace: apache
+  apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: apache-manager
+  apiGroup: rbac.authorization.k8s.io
+
+
+# kubectl auth can-i get pods --as=apache-user -n apache  

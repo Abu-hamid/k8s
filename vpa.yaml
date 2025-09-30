@@ -1,0 +1,31 @@
+# git clone <autoscaler-repo-url>
+# cd <autoscaler-repo>
+# run the script below /hack/deploy-vpa.sh
+
+kind: VerticalPodAutoscaler
+apiVersion: autoscaling.k8s.io/v1
+metadata:
+  name: apache-vpa
+  namespace: apache
+spec:
+  targetRef:
+    apiVersion: "apps/v1"
+    kind:       Deployment
+    name:       apache-deployment
+  updatePolicy:
+    updateMode: "Auto"
+
+
+# To check the status of VPA
+# kubectl describe vpa apache-vpa -n apache
+
+
+
+# Node Affinity --  it is just opposite of taint and tolerations
+# example: if you want to run a pod on a specific node, you can use node affinity, but if you want to avoid a pod from running on a specific node, you can use taint and tolerations
+
+# How to make a node into tainted node
+# kubectl taint nodes <node-name> key=value:NoSchedule
+
+# kubectl taint nodes <node-name> key=value:NoSchedule-
+

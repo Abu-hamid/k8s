@@ -1,0 +1,29 @@
+# kubectl scale deployment <deployment-name> --replicas=<number-of-replicas>  --- manual scaling
+
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: apache-hpa
+  namespace: apache
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: apache-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 20
+
+
+# kubectl run -i --tty load-generator --image=busybox /bin/sh -n apache
+# while true; do wget -q -O- http://apache-service.apache.svc.cluster.local; done
+# kubectl get hpa -n apache --watch
+# kubectl describe hpa apache-hpa -n apache
+# kubectl delete hpa apache-hpa -n apache        

@@ -1,0 +1,14 @@
+# kubectl auth whoami
+# kubectl auth can-i --list
+#kubectl can i get pods
+
+
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  namespace: apache
+  name: apache-manager
+rules:
+- apiGroups: ["", "apps", "extensions", "batch", "rbac.authorization.k8s.io"]
+  resources: ["pods", "services", "endpoints", "persistentvolumeclaims", "events", "configmaps", "secrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete", "apply"]
